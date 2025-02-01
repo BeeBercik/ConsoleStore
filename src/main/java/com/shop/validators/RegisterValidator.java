@@ -1,16 +1,14 @@
 package com.shop.validators;
 
-import com.shop.db.repositories.UserRepository;
-import com.shop.model.User;
-import lombok.RequiredArgsConstructor;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class RegisterValidator {
-    private final UserRepository userRepository;
+    public boolean hashAndValidatePasswords(String password, String repPassword) {
+        String hashedPasswordOne = BCrypt.hashpw(password, BCrypt.gensalt());
+        String hashedPasswordTwo = BCrypt.hashpw(repPassword, BCrypt.gensalt());
 
-    public boolean checkIfLoginIsFree(User user) {
-        return this.userRepository.getByLogin(user.getLogin()).isEmpty();
+        return hashedPasswordOne.equals(hashedPasswordTwo);
     }
 }

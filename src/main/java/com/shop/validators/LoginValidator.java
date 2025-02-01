@@ -3,6 +3,7 @@ package com.shop.validators;
 import com.shop.db.repositories.UserRepository;
 import com.shop.model.User;
 import lombok.RequiredArgsConstructor;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -16,6 +17,6 @@ public class LoginValidator {
         Optional<User> userBox = this.userRepository.getByLogin(user.getLogin());
 
         return userBox.isPresent() &&
-                userBox.get().getPassword().equals(user.getPassword());
+                BCrypt.checkpw(user.getPassword(), userBox.get().getPassword());
     }
 }

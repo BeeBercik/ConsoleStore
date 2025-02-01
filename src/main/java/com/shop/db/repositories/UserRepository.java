@@ -2,7 +2,6 @@ package com.shop.db.repositories;
 
 import com.shop.db.DbConnect;
 import com.shop.model.User;
-import com.shop.validators.RegisterValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +15,6 @@ import java.util.Optional;
 public class UserRepository {
     private final String GET_BY_LOGIN = "select * from users where login = ?";
     private final String PERSIST_USER = "insert into users (login, password) values (?, ?)";
-
-    private final RegisterValidator registerValidator;
 
     public Optional<User> getByLogin(String login) {
         try {
@@ -40,8 +37,9 @@ public class UserRepository {
 
     public boolean persist(User user) {
         try {
-           if(!this.registerValidator.checkIfLoginIsFree(user))
+           if(this.getByLogin(user.getLogin()).isPresent()) {
                return false;
+           }
 
             PreparedStatement ps = DbConnect.CONNECTION.prepareStatement(this.PERSIST_USER);
             ps.setString(1, user.getLogin());
