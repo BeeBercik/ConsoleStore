@@ -1,7 +1,6 @@
 package com.shop.core;
 
 import com.shop.gui.GUI;
-import com.shop.model.User;
 import com.shop.validators.LoginValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
