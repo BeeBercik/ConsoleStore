@@ -1,23 +1,20 @@
 package com.shop.gui;
 
 import com.shop.model.User;
-import com.shop.validators.RegisterValidator;
-import lombok.RequiredArgsConstructor;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 @Component
-@RequiredArgsConstructor
 public class GUI {
     private final Scanner scanner = new Scanner(System.in);
-    private final RegisterValidator registerValidator;
 
     public String entry() {
         System.out.println("\n***Welcome to the grocery***");
         System.out.println("1. Log in");
         System.out.println("2. Register");
+        System.out.print("Nr: ");
 
         return this.scanner.nextLine();
     }
@@ -31,25 +28,27 @@ public class GUI {
         return new User(login, password);
     }
 
-    public User askForRegisterCredentials() {
+    public Optional<User> askForRegisterCredentials() {
         System.out.print("Login: ");
         String login = this.scanner.nextLine();
 
         String password = "";
         String repPassword = "";
         boolean samePasswords = false;
-        while (!samePasswords) {
+        int attempts = 0;
+        while (!samePasswords && attempts < 3) {
             System.out.print("Password: ");
             password = this.scanner.nextLine();
-            System.out.print("Repeat password:");
+            System.out.print("Repeat password: ");
             repPassword = this.scanner.nextLine();
 
-            if(this.registerValidator.hashAndValidatePasswords(password, repPassword))
+            if(!password.equals(repPassword)) {
                 System.out.println("Passwords do not match. Try again.");
-            else
-                samePasswords = true;
+                attempts++;
+            } else
+                return Optional.of(new User(login, password));
         }
-        return new User(login, BCrypt.hashpw(password, BCrypt.gensalt()));
+        return Optional.empty();
     }
 
     public String showChoicesAndGetOne() {

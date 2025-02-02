@@ -37,15 +37,14 @@ public class UserRepository {
 
     public boolean persist(User user) {
         try {
-           if(this.getByLogin(user.getLogin()).isPresent()) {
+           if(this.getByLogin(user.getLogin()).isPresent())
                return false;
-           }
 
-            PreparedStatement ps = DbConnect.CONNECTION.prepareStatement(this.PERSIST_USER);
-            ps.setString(1, user.getLogin());
-            ps.setString(2, user.getPassword());
+           PreparedStatement ps = DbConnect.CONNECTION.prepareStatement(this.PERSIST_USER);
+           ps.setString(1, user.getLogin());
+           ps.setString(2, user.getPassword());
 
-            return ps.executeUpdate() == 1;
+           return ps.executeUpdate() == 1;
         } catch(SQLException e) {
             e.printStackTrace();
             System.out.println("Error in persist user");

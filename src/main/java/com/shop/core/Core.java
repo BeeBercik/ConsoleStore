@@ -2,9 +2,13 @@ package com.shop.core;
 
 import com.shop.db.repositories.UserRepository;
 import com.shop.gui.GUI;
+import com.shop.model.User;
 import com.shop.validators.LoginValidator;
 import lombok.RequiredArgsConstructor;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -43,13 +47,18 @@ public class Core {
         boolean correct = false;
         while(attempts < 3 && !correct) {
             attempts++;
-            if(this.loginValidator.checkCredentials(
-                    this.gui.askForLoginCredentials())) correct = true;
+            correct = this.loginValidator.checkCredentials(this.gui.askForLoginCredentials());
         }
         return correct;
     }
 
     public boolean register() {
-        return this.userRepository.persist(this.gui.askForRegisterCredentials());
+        Optional<User> user = this.gui.askForRegisterCredentials();
+        if(user.isPresent())
+            return this.userRepository.persist(new User(
+                    user.get().getLogin(),
+                    BCrypt.hashpw(user.get().getPassword(), BCrypt.gensalt())
+            ));
+        return false;
     }
 }
