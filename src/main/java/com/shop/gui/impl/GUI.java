@@ -1,5 +1,6 @@
-package com.shop.gui;
+package com.shop.gui.impl;
 
+import com.shop.gui.IGUI;
 import com.shop.model.Console;
 import com.shop.model.Pad;
 import com.shop.model.Item;
@@ -9,10 +10,11 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
-public class GUI {
+public class GUI implements IGUI {
     private final Scanner scanner = new Scanner(System.in);
 
     public void listAllItems(List<Console> consoles, List<Pad> pads) {
+        this.showAppMessage("Item list");
         List<Item> items = new ArrayList<>();
         items.addAll(consoles);
         items.addAll(pads);
@@ -71,7 +73,7 @@ public class GUI {
     public String showChoicesAndGetOne() {
         System.out.println("\n--Select what do you want to do--");
         System.out.println("1. List items");
-        System.out.println("2. Add to your cart");
+        System.out.println("2. Add item to your basket");
         System.out.println("3. Exit shop");
         System.out.print("Nr: ");
 
@@ -79,6 +81,6 @@ public class GUI {
     }
 
     public void showAppMessage(String message) {
-        System.out.println("** " + message + " **");
+        System.out.println("\n** " + message + " **");
     }
 }

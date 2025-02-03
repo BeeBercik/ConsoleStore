@@ -1,7 +1,7 @@
 package com.shop;
 
 import com.shop.configuration.AppConfiguration;
-import com.shop.core.Core;
+import com.shop.core.impl.Core;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;

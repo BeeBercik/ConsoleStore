@@ -1,7 +1,8 @@
-package com.shop.db.repositories;
+package com.shop.db.repositories.impl;
 
 import com.shop.db.DbConnect;
-import com.shop.gui.GUI;
+import com.shop.db.repositories.IPadRepository;
+import com.shop.gui.impl.GUI;
 import com.shop.model.Pad;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class PadRepository {
+public class PadRepository implements IPadRepository {
 
     private final GUI gui;
 
@@ -31,8 +32,8 @@ public class PadRepository {
                 pads.add(new Pad(
                     rs.getInt("id"),
                     rs.getString("name"),
-                    rs.getInt("buttons"),
-                    rs.getInt("price")));
+                    rs.getInt("price"),
+                    rs.getInt("buttons")));
             }
 
             return pads;

@@ -1,11 +1,12 @@
-package com.shop.core;
+package com.shop.core.impl;
 
-import com.shop.db.repositories.ConsoleRepository;
-import com.shop.db.repositories.PadRepository;
-import com.shop.db.repositories.UserRepository;
-import com.shop.gui.GUI;
+import com.shop.core.ICore;
+import com.shop.db.repositories.impl.ConsoleRepository;
+import com.shop.db.repositories.impl.PadRepository;
+import com.shop.db.repositories.impl.UserRepository;
+import com.shop.gui.impl.GUI;
 import com.shop.model.User;
-import com.shop.validators.LoginValidator;
+import com.shop.validators.impl.Validator;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Component;
@@ -14,10 +15,10 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class Core {
+public class Core implements ICore {
 
     private final GUI gui;
-    private final LoginValidator loginValidator;
+    private final Validator validator;
     private final UserRepository userRepository;
     private final ConsoleRepository consoleRepository;
     private final PadRepository padRepository;
@@ -54,7 +55,7 @@ public class Core {
         boolean correct = false;
         while(attempts < 3 && !correct) {
             attempts++;
-            correct = this.loginValidator.checkCredentials(this.gui.askForLoginCredentials());
+            correct = this.validator.checkCredentials(this.gui.askForLoginCredentials());
         }
         return correct;
     }

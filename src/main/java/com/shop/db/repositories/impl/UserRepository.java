@@ -1,7 +1,8 @@
-package com.shop.db.repositories;
+package com.shop.db.repositories.impl;
 
 import com.shop.db.DbConnect;
-import com.shop.gui.GUI;
+import com.shop.db.repositories.IUserRepository;
+import com.shop.gui.impl.GUI;
 import com.shop.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class UserRepository {
+public class UserRepository implements IUserRepository {
 
     private GUI gui;
 

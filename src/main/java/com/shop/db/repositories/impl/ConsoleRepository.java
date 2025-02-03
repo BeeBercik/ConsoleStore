@@ -1,7 +1,8 @@
-package com.shop.db.repositories;
+package com.shop.db.repositories.impl;
 
 import com.shop.db.DbConnect;
-import com.shop.gui.GUI;
+import com.shop.db.repositories.IConsoleRepository;
+import com.shop.gui.impl.GUI;
 import com.shop.model.Console;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class ConsoleRepository {
+public class ConsoleRepository implements IConsoleRepository {
 
     private final GUI gui;
 
@@ -31,8 +32,8 @@ public class ConsoleRepository {
                 consoles.add(new Console(
                     rs.getInt("id"),
                     rs.getString("name"),
-                    rs.getInt("releaseYear"),
-                    rs.getInt("price")));
+                    rs.getInt("price"),
+                    rs.getInt("releaseYear")));
             }
 
             return consoles;
