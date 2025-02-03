@@ -1,5 +1,6 @@
 package com.shop.core;
 
+import com.shop.db.repositories.ConsoleRepository;
 import com.shop.db.repositories.UserRepository;
 import com.shop.gui.GUI;
 import com.shop.model.User;
@@ -17,9 +18,10 @@ public class Core {
     private final GUI gui;
     private final LoginValidator loginValidator;
     private final UserRepository userRepository;
+    private final ConsoleRepository consoleRepository;
 
     public void run() {
-        String entryChoice = this.gui.entry();
+        String entryChoice = this.gui.loginOrRegister();
         boolean correct = switch(entryChoice) {
             case "1" -> this.login();
             case "2" -> this.register();
@@ -29,17 +31,19 @@ public class Core {
         while(correct) {
             switch(this.gui.showChoicesAndGetOne()) {
                 case "1":
-                    System.out.println("You choose nr 1!");
+                    this.gui.listAllItems(this.consoleRepository.getAllConsoles());
                     break;
                 case "2":
                     System.out.println("You choose nr 2!");
                     break;
                 case "3":
+                    this.gui.showAppMessage("Exiting application...");
                     return;
                 default:
-                    System.out.println("Incorrect choice!");
+                    this.gui.showAppMessage("Incorrect choice!");
             }
         }
+        this.gui.showAppMessage("Not logged in! Exiting application...");
     }
 
     public boolean login() {
@@ -53,12 +57,16 @@ public class Core {
     }
 
     public boolean register() {
-        Optional<User> user = this.gui.askForRegisterCredentials();
-        if(user.isPresent())
-            return this.userRepository.persist(new User(
-                    user.get().getLogin(),
-                    BCrypt.hashpw(user.get().getPassword(), BCrypt.gensalt())
-            ));
+        try {
+            Optional<User> user = this.gui.askForRegisterCredentials();
+            if (user.isPresent())
+                return this.userRepository.persist(new User(
+                        user.get().getLogin(),
+                        BCrypt.hashpw(user.get().getPassword(), BCrypt.gensalt())
+                ));
+        } catch(IllegalArgumentException e) {
+            this.gui.showAppMessage("User login already exists!");
+        }
         return false;
     }
 }

@@ -1,8 +1,10 @@
 package com.shop.gui;
 
+import com.shop.model.Console;
 import com.shop.model.User;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -10,7 +12,11 @@ import java.util.Scanner;
 public class GUI {
     private final Scanner scanner = new Scanner(System.in);
 
-    public String entry() {
+    public void listAllItems(List<Console> consoles) {
+        consoles.forEach(System.out::println);
+    }
+
+    public String loginOrRegister() {
         System.out.println("\n***Welcome to the grocery***");
         System.out.println("1. Log in");
         System.out.println("2. Register");
@@ -43,7 +49,7 @@ public class GUI {
             repPassword = this.scanner.nextLine();
 
             if(!password.equals(repPassword)) {
-                System.out.println("Passwords do not match. Try again.");
+                this.showAppMessage("Passwords do not match. Try again.");
                 attempts++;
             } else
                 return Optional.of(new User(login, password));
@@ -59,5 +65,9 @@ public class GUI {
         System.out.print("Nr: ");
 
         return this.scanner.nextLine();
+    }
+
+    public void showAppMessage(String message) {
+        System.out.println("** " + message + " **");
     }
 }

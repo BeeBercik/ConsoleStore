@@ -1,6 +1,7 @@
 package com.shop.db.repositories;
 
 import com.shop.db.DbConnect;
+import com.shop.gui.GUI;
 import com.shop.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,9 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class UserRepository {
+
+    private GUI gui;
+
     private final String GET_BY_LOGIN = "select * from users where login = ?";
     private final String PERSIST_USER = "insert into users (login, password) values (?, ?)";
 
@@ -30,15 +34,17 @@ public class UserRepository {
                 ));
             }
         } catch (SQLException e) {
+            this.gui.showAppMessage("Error in getByLogin");
             e.printStackTrace();
         }
         return Optional.empty();
     }
 
-    public boolean persist(User user) {
+    public boolean persist(User user) throws IllegalArgumentException {
         try {
-           if(this.getByLogin(user.getLogin()).isPresent())
-               return false;
+           if(this.getByLogin(user.getLogin()).isPresent()) {
+               throw new IllegalArgumentException();
+           }
 
            PreparedStatement ps = DbConnect.CONNECTION.prepareStatement(this.PERSIST_USER);
            ps.setString(1, user.getLogin());
@@ -46,8 +52,8 @@ public class UserRepository {
 
            return ps.executeUpdate() == 1;
         } catch(SQLException e) {
+            this.gui.showAppMessage("Error in persist user");
             e.printStackTrace();
-            System.out.println("Error in persist user");
         }
         return false;
     }
