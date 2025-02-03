@@ -2,21 +2,29 @@ package com.shop.gui;
 
 import com.shop.model.Console;
 import com.shop.model.Pad;
-import com.shop.model.Product;
+import com.shop.model.Item;
 import com.shop.model.User;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 @Component
 public class GUI {
     private final Scanner scanner = new Scanner(System.in);
 
     public void listAllItems(List<Console> consoles, List<Pad> pads) {
-        consoles.forEach(System.out::println);
-        pads.forEach(System.out::println);
+        List<Item> items = new ArrayList<>();
+        items.addAll(consoles);
+        items.addAll(pads);
+
+        items.sort(new Comparator<Item>() {
+            @Override
+            public int compare(Item o1, Item o2) {
+                return o1.getId() - o2.getId();
+            }
+        });
+
+        items.forEach(System.out::println);
     }
 
     public String loginOrRegister() {

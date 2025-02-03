@@ -1,7 +1,7 @@
 package com.shop.model;
 
 
-public class Console extends Product {
+public class Console extends Item {
     private int releaseYear;
 
     public Console(int id, String name, int price, int releaseYear) {

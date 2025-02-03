@@ -18,7 +18,7 @@ public class PadRepository {
 
     private final GUI gui;
 
-    private final String GET_ALL_PADS = "SELECT * FROM pads";
+    private final String GET_ALL_PADS = "SELECT * FROM items LEFT JOIN pads ON items.pad_id = pads.id where pad_id IS NOT NULL";
     private final String GET_PAD_BY_ID = "SELECT * FROM pads WHERE id = ?";
 
     public List<Pad> getAllPads() {

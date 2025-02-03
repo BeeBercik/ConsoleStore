@@ -1,11 +1,11 @@
 package com.shop.model;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
-//@NoArgsConstructor
-public class Product {
+@Getter
+public class Item {
     protected int id;
     protected String name;
     protected int price;

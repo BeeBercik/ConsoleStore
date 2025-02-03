@@ -18,7 +18,7 @@ public class ConsoleRepository {
 
     private final GUI gui;
 
-    private final String GET_ALL_CONSOLES = "SELECT * FROM consoles";
+    private final String GET_ALL_CONSOLES = "SELECT * FROM items LEFT JOIN consoles ON items.console_id = consoles.id where console_id IS NOT NULL";
     private final String GET_BY_ID = "SELECT * FROM consoles WHERE id = ?";
 
     public List<Console> getAllConsoles() {

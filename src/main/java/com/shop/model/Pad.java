@@ -1,7 +1,7 @@
 package com.shop.model;
 
 
-public class Pad extends Product {
+public class Pad extends Item {
     private int buttons;
 
     public Pad(int id, String name, int price, int buttons) {
