@@ -1,12 +1,12 @@
 package com.shop.model;
 
 
-public class Console extends Product {
-    private int releaseYear;
+public class Pad extends Product {
+    private int buttons;
 
-    public Console(int id, String name, int price, int releaseYear) {
+    public Pad(int id, String name, int price, int buttons) {
         super(id, name, price);
-        this.releaseYear = releaseYear;
+        this.buttons = buttons;
     }
 
     @Override
@@ -14,7 +14,7 @@ public class Console extends Product {
         return new StringBuilder()
                 .append("- ID: ").append(this.id)
                 .append(" | Name: ").append(this.name)
-                .append(" | ReleaseYear: ").append(this.releaseYear)
+                .append(" | Buttons: ").append(this.buttons)
                 .append(" | Price: ").append(this.price)
                 .toString();
     }

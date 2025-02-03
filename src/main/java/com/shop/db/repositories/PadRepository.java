@@ -2,7 +2,7 @@ package com.shop.db.repositories;
 
 import com.shop.db.DbConnect;
 import com.shop.gui.GUI;
-import com.shop.model.Console;
+import com.shop.model.Pad;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,30 +14,30 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class ConsoleRepository {
+public class PadRepository {
 
     private final GUI gui;
 
-    private final String GET_ALL_CONSOLES = "SELECT * FROM consoles";
-    private final String GET_BY_ID = "SELECT * FROM consoles WHERE id = ?";
+    private final String GET_ALL_PADS = "SELECT * FROM pads";
+    private final String GET_PAD_BY_ID = "SELECT * FROM pads WHERE id = ?";
 
-    public List<Console> getAllConsoles() {
+    public List<Pad> getAllPads() {
         try {
-            PreparedStatement ps = DbConnect.CONNECTION.prepareStatement(this.GET_ALL_CONSOLES);
-            List<Console> consoles = new ArrayList<>();
-
+            PreparedStatement ps = DbConnect.CONNECTION.prepareStatement(this.GET_ALL_PADS);
             ResultSet rs = ps.executeQuery();
+
+            List<Pad> pads = new ArrayList<>();
             while(rs.next()) {
-                consoles.add(new Console(
+                pads.add(new Pad(
                     rs.getInt("id"),
                     rs.getString("name"),
-                    rs.getInt("releaseYear"),
+                    rs.getInt("buttons"),
                     rs.getInt("price")));
             }
 
-            return consoles;
-        } catch(SQLException e) {
-            this.gui.showAppMessage("Error in getAllConsoles");
+            return pads;
+        } catch (SQLException e) {
+            this.gui.showAppMessage("Error in getAllPads");
             e.printStackTrace();
         }
 

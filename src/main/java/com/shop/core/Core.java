@@ -1,6 +1,7 @@
 package com.shop.core;
 
 import com.shop.db.repositories.ConsoleRepository;
+import com.shop.db.repositories.PadRepository;
 import com.shop.db.repositories.UserRepository;
 import com.shop.gui.GUI;
 import com.shop.model.User;
@@ -19,6 +20,7 @@ public class Core {
     private final LoginValidator loginValidator;
     private final UserRepository userRepository;
     private final ConsoleRepository consoleRepository;
+    private final PadRepository padRepository;
 
     public void run() {
         String entryChoice = this.gui.loginOrRegister();
@@ -31,7 +33,8 @@ public class Core {
         while(correct) {
             switch(this.gui.showChoicesAndGetOne()) {
                 case "1":
-                    this.gui.listAllItems(this.consoleRepository.getAllConsoles());
+                    this.gui.listAllItems(this.consoleRepository.getAllConsoles(),
+                            this.padRepository.getAllPads());
                     break;
                 case "2":
                     System.out.println("You choose nr 2!");

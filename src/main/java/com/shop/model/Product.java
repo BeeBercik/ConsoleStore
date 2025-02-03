@@ -1,20 +1,20 @@
 package com.shop.model;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
-public class Console extends Product {
-    private int releaseYear;
-
-    public Console(int id, String name, int price, int releaseYear) {
-        super(id, name, price);
-        this.releaseYear = releaseYear;
-    }
+@AllArgsConstructor
+//@NoArgsConstructor
+public class Product {
+    protected int id;
+    protected String name;
+    protected int price;
 
     @Override
     public String toString() {
         return new StringBuilder()
                 .append("- ID: ").append(this.id)
                 .append(" | Name: ").append(this.name)
-                .append(" | ReleaseYear: ").append(this.releaseYear)
                 .append(" | Price: ").append(this.price)
                 .toString();
     }

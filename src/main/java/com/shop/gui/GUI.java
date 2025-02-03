@@ -1,6 +1,8 @@
 package com.shop.gui;
 
 import com.shop.model.Console;
+import com.shop.model.Pad;
+import com.shop.model.Product;
 import com.shop.model.User;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +14,9 @@ import java.util.Scanner;
 public class GUI {
     private final Scanner scanner = new Scanner(System.in);
 
-    public void listAllItems(List<Console> consoles) {
+    public void listAllItems(List<Console> consoles, List<Pad> pads) {
         consoles.forEach(System.out::println);
+        pads.forEach(System.out::println);
     }
 
     public String loginOrRegister() {
