@@ -17,8 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PadRepository implements IPadRepository {
 
-    private final IGUI gui;
-
     private final String GET_ALL_PADS = "SELECT * FROM items LEFT JOIN pads ON items.pad_id = pads.id where pad_id IS NOT NULL";
     private final String GET_PAD_BY_ID = "SELECT * FROM pads WHERE id = ?";
 
@@ -39,7 +37,7 @@ public class PadRepository implements IPadRepository {
 
             return pads;
         } catch (SQLException e) {
-            this.gui.showAppMessage("Error in getAllPads");
+            System.out.println("Error in getAllPads");
             e.printStackTrace();
         }
 

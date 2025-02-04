@@ -3,17 +3,22 @@ package com.shop.gui.impl;
 import com.shop.gui.IGUI;
 import com.shop.model.Item;
 import com.shop.model.User;
+import com.shop.services.impl.ItemService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 @Component
+@RequiredArgsConstructor
 public class GUI implements IGUI {
+
+    private final ItemService itemService;
     private final Scanner scanner = new Scanner(System.in);
 
-    public void listAllItems(List<Item> items) {
+    public void listAllItems() {
         this.showAppMessage("Item list");
-        items.forEach(System.out::println);
+        this.itemService.getAllItems().forEach(System.out::println);
     }
 
     public String loginOrRegister() {
@@ -61,7 +66,8 @@ public class GUI implements IGUI {
         System.out.println("\n--Select what do you want to do--");
         System.out.println("1. List items");
         System.out.println("2. Add item to your basket");
-        System.out.println("3. Exit shop");
+        System.out.println("3. Show my basket");
+        System.out.println("4. Exit shop");
         System.out.print("Nr: ");
 
         return this.scanner.nextLine();
@@ -74,5 +80,14 @@ public class GUI implements IGUI {
 
     public void showAppMessage(String message) {
         System.out.println("\n** " + message + " **");
+    }
+
+    public void showBasket(List<Item> items) {
+        if(items.isEmpty()) this.showAppMessage("Your basket is empty");
+        else this.showAppMessage("Your basket");
+
+        for (Item item : items) {
+            System.out.println(item);
+        }
     }
 }

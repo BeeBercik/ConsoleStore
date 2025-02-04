@@ -1,21 +1,22 @@
 package com.shop.core.impl;
 
 import com.shop.core.ICore;
-import com.shop.db.repositories.IConsoleRepository;
-import com.shop.db.repositories.IPadRepository;
+
 import com.shop.gui.impl.GUI;
+import com.shop.model.Item;
 import com.shop.services.impl.ItemService;
 import com.shop.services.impl.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class Core implements ICore {
 
     private final GUI gui;
-    private final IConsoleRepository consoleRepository;
-    private final IPadRepository padRepository;
     private final ItemService itemService;
     private final UserService userService;
 
@@ -30,17 +31,21 @@ public class Core implements ICore {
         while(correct) {
             switch(this.gui.showChoicesAndGetOne()) {
                 case "1":
-                    this.gui.listAllItems(
-                            this.itemService.getAllItems(
-                                    this.consoleRepository.getAllConsoles(),
-                                    this.padRepository.getAllPads()
-                            )
-                    );
+                    this.gui.listAllItems();
                     break;
                 case "2":
-                    String itemId = this.gui.selectItem();
+                    String id = this.gui.selectItem();
+                    Optional<Item> itemBox = this.itemService.checkItem(id);
+                    if(itemBox.isPresent()) {
+                        this.itemService.addItemToBasket(itemBox.get());
+                        this.gui.showAppMessage("Item added to your basket");
+                    }
+                    else this.gui.showAppMessage("Item not added.");
                     break;
                 case "3":
+                    this.gui.showBasket(this.itemService.getBasket());
+                    break;
+                case "4":
                     this.gui.showAppMessage("Exiting application...");
                     return;
                 default:

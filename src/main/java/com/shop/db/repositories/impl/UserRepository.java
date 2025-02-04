@@ -16,8 +16,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserRepository implements IUserRepository {
 
-    private final IGUI gui;
-
     private final String GET_BY_LOGIN = "select * from users where login = ?";
     private final String PERSIST_USER = "insert into users (login, password) values (?, ?)";
 
@@ -35,7 +33,7 @@ public class UserRepository implements IUserRepository {
                 ));
             }
         } catch (SQLException e) {
-            this.gui.showAppMessage("Error in getByLogin");
+            System.out.println("Error in getByLogin");
             e.printStackTrace();
         }
         return Optional.empty();
@@ -53,7 +51,7 @@ public class UserRepository implements IUserRepository {
 
            return ps.executeUpdate() == 1;
         } catch(SQLException e) {
-            this.gui.showAppMessage("Error in persist user");
+            System.out.println("Error in persist user");
             e.printStackTrace();
         }
         return false;

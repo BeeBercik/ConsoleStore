@@ -17,8 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConsoleRepository implements IConsoleRepository {
 
-    private final IGUI gui;
-
     private final String GET_ALL_CONSOLES = "SELECT * FROM items LEFT JOIN consoles ON items.console_id = consoles.id where console_id IS NOT NULL";
     private final String GET_BY_ID = "SELECT * FROM consoles WHERE id = ?";
 
@@ -39,7 +37,7 @@ public class ConsoleRepository implements IConsoleRepository {
 
             return consoles;
         } catch(SQLException e) {
-            this.gui.showAppMessage("Error in getAllConsoles");
+            System.out.println("Error in getAllConsoles");
             e.printStackTrace();
         }
 

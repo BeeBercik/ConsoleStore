@@ -1,11 +1,11 @@
 package com.shop.services;
 
-import com.shop.model.Console;
 import com.shop.model.Item;
-import com.shop.model.Pad;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IItemService {
-    List<Item> getAllItems(List<Console> consoles, List<Pad> pads);
+    List<Item> getAllItems();
+    Optional<Item> checkItem(String id);
 }
