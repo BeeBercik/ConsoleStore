@@ -2,7 +2,7 @@ package com.shop.db.repositories.impl;
 
 import com.shop.db.DbConnect;
 import com.shop.db.repositories.IUserRepository;
-import com.shop.gui.impl.GUI;
+import com.shop.gui.IGUI;
 import com.shop.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserRepository implements IUserRepository {
 
-    private GUI gui;
+    private final IGUI gui;
 
     private final String GET_BY_LOGIN = "select * from users where login = ?";
     private final String PERSIST_USER = "insert into users (login, password) values (?, ?)";

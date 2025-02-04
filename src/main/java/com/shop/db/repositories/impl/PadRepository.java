@@ -2,7 +2,7 @@ package com.shop.db.repositories.impl;
 
 import com.shop.db.DbConnect;
 import com.shop.db.repositories.IPadRepository;
-import com.shop.gui.impl.GUI;
+import com.shop.gui.IGUI;
 import com.shop.model.Pad;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PadRepository implements IPadRepository {
 
-    private final GUI gui;
+    private final IGUI gui;
 
     private final String GET_ALL_PADS = "SELECT * FROM items LEFT JOIN pads ON items.pad_id = pads.id where pad_id IS NOT NULL";
     private final String GET_PAD_BY_ID = "SELECT * FROM pads WHERE id = ?";
@@ -33,6 +33,7 @@ public class PadRepository implements IPadRepository {
                     rs.getInt("id"),
                     rs.getString("name"),
                     rs.getInt("price"),
+                    rs.getInt("quantity"),
                     rs.getInt("buttons")));
             }
 

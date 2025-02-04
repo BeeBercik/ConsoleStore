@@ -80,6 +80,11 @@ public class GUI implements IGUI {
         return this.scanner.nextLine();
     }
 
+    public String selectItem() {
+        System.out.print("\nSelect item ID which you want to add to your basket: ");
+        return this.scanner.nextLine();
+    }
+
     public void showAppMessage(String message) {
         System.out.println("\n** " + message + " **");
     }

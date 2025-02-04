@@ -1,5 +1,9 @@
 package com.shop.db;
 
+import com.shop.gui.IGUI;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

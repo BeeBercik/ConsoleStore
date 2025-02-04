@@ -2,7 +2,7 @@ package com.shop.db.repositories.impl;
 
 import com.shop.db.DbConnect;
 import com.shop.db.repositories.IConsoleRepository;
-import com.shop.gui.impl.GUI;
+import com.shop.gui.IGUI;
 import com.shop.model.Console;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConsoleRepository implements IConsoleRepository {
 
-    private final GUI gui;
+    private final IGUI gui;
 
     private final String GET_ALL_CONSOLES = "SELECT * FROM items LEFT JOIN consoles ON items.console_id = consoles.id where console_id IS NOT NULL";
     private final String GET_BY_ID = "SELECT * FROM consoles WHERE id = ?";
@@ -33,6 +33,7 @@ public class ConsoleRepository implements IConsoleRepository {
                     rs.getInt("id"),
                     rs.getString("name"),
                     rs.getInt("price"),
+                    rs.getInt("quantity"),
                     rs.getInt("releaseYear")));
             }
 

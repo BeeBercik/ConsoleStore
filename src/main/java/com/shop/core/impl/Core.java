@@ -1,12 +1,12 @@
 package com.shop.core.impl;
 
 import com.shop.core.ICore;
-import com.shop.db.repositories.impl.ConsoleRepository;
-import com.shop.db.repositories.impl.PadRepository;
-import com.shop.db.repositories.impl.UserRepository;
+import com.shop.db.repositories.IConsoleRepository;
+import com.shop.db.repositories.IPadRepository;
+import com.shop.db.repositories.IUserRepository;
 import com.shop.gui.impl.GUI;
 import com.shop.model.User;
-import com.shop.validators.impl.Validator;
+import com.shop.validators.IValidator;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Component;
@@ -18,10 +18,10 @@ import java.util.Optional;
 public class Core implements ICore {
 
     private final GUI gui;
-    private final Validator validator;
-    private final UserRepository userRepository;
-    private final ConsoleRepository consoleRepository;
-    private final PadRepository padRepository;
+    private final IValidator validator;
+    private final IUserRepository userRepository;
+    private final IConsoleRepository consoleRepository;
+    private final IPadRepository padRepository;
 
     public void run() {
         String entryChoice = this.gui.loginOrRegister();
@@ -38,7 +38,7 @@ public class Core implements ICore {
                             this.padRepository.getAllPads());
                     break;
                 case "2":
-                    System.out.println("You choose nr 2!");
+                    String itemId = this.gui.selectItem();
                     break;
                 case "3":
                     this.gui.showAppMessage("Exiting application...");

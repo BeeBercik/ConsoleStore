@@ -4,18 +4,13 @@ package com.shop.model;
 public class Pad extends Item {
     private int buttons;
 
-    public Pad(int id, String name, int price, int buttons) {
-        super(id, name, price);
+    public Pad(int id, String name, int price, int quantity, int buttons) {
+        super(id, name, price, quantity);
         this.buttons = buttons;
     }
 
     @Override
     public String toString() {
-        return new StringBuilder()
-                .append("- ID: ").append(this.id)
-                .append(" | Name: ").append(this.name)
-                .append(" | Buttons: ").append(this.buttons)
-                .append(" | Price: ").append(this.price)
-                .toString();
+        return super.toString() + " | Buttons: " + buttons;
     }
 }
