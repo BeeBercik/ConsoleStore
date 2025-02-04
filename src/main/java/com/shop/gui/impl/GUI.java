@@ -67,7 +67,8 @@ public class GUI implements IGUI {
         System.out.println("1. List items");
         System.out.println("2. Add item to your basket");
         System.out.println("3. Show my basket");
-        System.out.println("4. Exit shop");
+        System.out.println("4. Finalize basket");
+        System.out.println("5. Exit shop");
         System.out.print("Nr: ");
 
         return this.scanner.nextLine();

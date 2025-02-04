@@ -46,6 +46,9 @@ public class Core implements ICore {
                     this.gui.showBasket(this.itemService.getBasket());
                     break;
                 case "4":
+
+                    break;
+                case "5":
                     this.gui.showAppMessage("Exiting application...");
                     return;
                 default:
