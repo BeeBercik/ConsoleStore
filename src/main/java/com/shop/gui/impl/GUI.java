@@ -1,8 +1,6 @@
 package com.shop.gui.impl;
 
 import com.shop.gui.IGUI;
-import com.shop.model.Console;
-import com.shop.model.Pad;
 import com.shop.model.Item;
 import com.shop.model.User;
 import org.springframework.stereotype.Component;
@@ -13,19 +11,8 @@ import java.util.*;
 public class GUI implements IGUI {
     private final Scanner scanner = new Scanner(System.in);
 
-    public void listAllItems(List<Console> consoles, List<Pad> pads) {
+    public void listAllItems(List<Item> items) {
         this.showAppMessage("Item list");
-        List<Item> items = new ArrayList<>();
-        items.addAll(consoles);
-        items.addAll(pads);
-
-        items.sort(new Comparator<Item>() {
-            @Override
-            public int compare(Item o1, Item o2) {
-                return o1.getId() - o2.getId();
-            }
-        });
-
         items.forEach(System.out::println);
     }
 
