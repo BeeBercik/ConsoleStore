@@ -46,7 +46,7 @@ public class Core implements ICore {
                     this.gui.showBasket(this.itemService.getBasket());
                     break;
                 case "4":
-
+                    this.gui.showAppMessage(this.itemService.finalizeBasket() ? "Congratulations, you finalized your shopping" : "You cant finalize your basket");
                     break;
                 case "5":
                     this.gui.showAppMessage("Exiting application...");

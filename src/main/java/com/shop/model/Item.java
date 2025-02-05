@@ -18,6 +18,7 @@ public class Item {
                 .append(" | Name: ").append(this.name)
                 .append(" | Price: ").append(this.price)
                 .append(" | Count: ").append(this.quantity)
+                .append(this.quantity > 0 ? " - AVAILABLE" : " - UNAVAILABLE")
                 .toString();
     }
 }
