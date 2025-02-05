@@ -4,12 +4,11 @@ import com.shop.core.ICore;
 
 import com.shop.gui.impl.GUI;
 import com.shop.model.Item;
-import com.shop.services.impl.ItemService;
-import com.shop.services.impl.UserService;
+import com.shop.services.IItemService;
+import com.shop.services.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Component
@@ -17,8 +16,8 @@ import java.util.Optional;
 public class Core implements ICore {
 
     private final GUI gui;
-    private final ItemService itemService;
-    private final UserService userService;
+    private final IItemService itemService;
+    private final IUserService userService;
 
     public void run() {
         String entryChoice = this.gui.loginOrRegister();

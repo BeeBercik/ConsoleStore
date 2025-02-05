@@ -3,7 +3,7 @@ package com.shop.gui.impl;
 import com.shop.gui.IGUI;
 import com.shop.model.Item;
 import com.shop.model.User;
-import com.shop.services.impl.ItemService;
+import com.shop.services.IItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class GUI implements IGUI {
 
-    private final ItemService itemService;
+    private final IItemService itemService;
     private final Scanner scanner = new Scanner(System.in);
 
     public void listAllItems() {
@@ -76,6 +76,7 @@ public class GUI implements IGUI {
 
     public String selectItem() {
         System.out.print("\nSelect item ID which you want to add to your basket: ");
+
         return this.scanner.nextLine();
     }
 
@@ -87,8 +88,6 @@ public class GUI implements IGUI {
         if(items.isEmpty()) this.showAppMessage("Your basket is empty");
         else this.showAppMessage("Your basket");
 
-        for (Item item : items) {
-            System.out.println(item);
-        }
+        items.forEach(System.out::println);
     }
 }

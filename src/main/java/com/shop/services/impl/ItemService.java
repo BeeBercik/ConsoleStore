@@ -1,11 +1,7 @@
 package com.shop.services.impl;
 
-import com.shop.db.repositories.IConsoleRepository;
-import com.shop.db.repositories.IPadRepository;
 import com.shop.db.repositories.impl.ItemRepository;
-import com.shop.model.Console;
 import com.shop.model.Item;
-import com.shop.model.Pad;
 import com.shop.services.IItemService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,20 +13,13 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ItemService implements IItemService {
 
-    private final IConsoleRepository consoleRepository;
-    private final IPadRepository padRepository;
     private final ItemRepository itemRepository;
 
     @Getter
     private List<Item> basket = new ArrayList<>();
 
     public List<Item> getAllItems() {
-        List<Console> consoles = this.consoleRepository.getAllConsoles();
-        List<Pad> pads = this.padRepository.getAllPads();
-
-        List<Item> items = new ArrayList<>();
-        items.addAll(consoles);
-        items.addAll(pads);
+        List<Item> items = this.itemRepository.getAllItems();
 
         items.sort(new Comparator<Item>() {
             @Override
@@ -65,6 +54,7 @@ public class ItemService implements IItemService {
             this.itemRepository.decreaseItemQuantity(item.getId());
         }
         this.basket.clear();
+
         return true;
     }
 }
