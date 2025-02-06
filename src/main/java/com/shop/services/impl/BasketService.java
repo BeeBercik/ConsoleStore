@@ -1,6 +1,6 @@
 package com.shop.services.impl;
 
-import com.shop.db.repositories.impl.BasketRepository;
+import com.shop.db.repositories.IItemRepository;
 import com.shop.db.repositories.impl.ItemRepository;
 import com.shop.model.Item;
 import com.shop.model.User;
@@ -19,13 +19,7 @@ public class BasketService implements IBasketService {
     @Getter
     private List<Item> basket = new ArrayList<>();
 
-    private final BasketRepository basketRepository;
-    private final ItemRepository itemRepository;
-
-    public void checkAndCreateUserBasket(User user) {
-        if(!this.basketRepository.checkUserBasket(user))
-            this.basketRepository.createUserBasket(user);
-    }
+    private final IItemRepository itemRepository;
 
     public void addItemToBasket(Item item) {
         this.basket.add(item);

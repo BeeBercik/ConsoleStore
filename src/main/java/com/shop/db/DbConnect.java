@@ -16,9 +16,7 @@ public class DbConnect {
             DROP TABLE IF EXISTS consoles CASCADE;
             DROP TABLE IF EXISTS pads CASCADE;
             DROP TABLE IF EXISTS items CASCADE;            
-            DROP TABLE IF EXISTS users CASCADE;
-            DROP TABLE IF EXISTS users_baskets CASCADE;            
-           DROP TABLE IF EXISTS basket_items CASCADE;            
+            DROP TABLE IF EXISTS users CASCADE;      
 
             create table if not exists users (
                 id serial primary key,
@@ -47,18 +45,6 @@ public class DbConnect {
                 foreign key (console_id) references consoles(id),
                 constraint fg_items_pads
                 foreign key (pad_id) references pads(id)
-            );
-
-            create table if not exists users_baskets (
-                id serial primary key,
-                user_id integer references users(id)
-            );
-
-            create table if not exists basket_items (
-                id serial primary key,
-                basket_id integer references users_baskets(id),
-                item_id integer references items(id),
-                quantity integer
             );
             """;
 

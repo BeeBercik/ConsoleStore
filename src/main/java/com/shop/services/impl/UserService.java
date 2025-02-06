@@ -1,7 +1,6 @@
 package com.shop.services.impl;
 
 import com.shop.db.repositories.IUserRepository;
-import com.shop.db.repositories.impl.BasketRepository;
 import com.shop.gui.IGUI;
 import com.shop.model.User;
 import com.shop.services.IUserService;

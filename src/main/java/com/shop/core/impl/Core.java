@@ -6,6 +6,7 @@ import com.shop.gui.IGUI;
 import com.shop.gui.impl.GUI;
 import com.shop.model.Item;
 import com.shop.model.User;
+import com.shop.services.IBasketService;
 import com.shop.services.IItemService;
 import com.shop.services.IUserService;
 import com.shop.services.impl.BasketService;
@@ -21,13 +22,10 @@ public class Core implements ICore {
     private final IGUI gui;
     private final IItemService itemService;
     private final IUserService userService;
-    private final BasketService basketService;
+    private final IBasketService basketService;
 
     public void run() {
         Optional<User> userBox = this.loginOrRegister();
-
-        if(userBox.isPresent())
-            this.basketService.checkAndCreateUserBasket(userBox.get());
 
         while(userBox.isPresent()) {
             switch(this.gui.showChoicesAndGetOne()) {
