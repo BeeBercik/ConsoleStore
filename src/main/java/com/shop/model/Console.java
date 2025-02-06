@@ -1,6 +1,8 @@
 package com.shop.model;
 
+import lombok.Getter;
 
+@Getter
 public class Console extends Item {
     private int releaseYear;
 

@@ -2,10 +2,13 @@ package com.shop.core.impl;
 
 import com.shop.core.ICore;
 
+import com.shop.gui.IGUI;
 import com.shop.gui.impl.GUI;
 import com.shop.model.Item;
+import com.shop.model.User;
 import com.shop.services.IItemService;
 import com.shop.services.IUserService;
+import com.shop.services.impl.BasketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,37 +18,35 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class Core implements ICore {
 
-    private final GUI gui;
+    private final IGUI gui;
     private final IItemService itemService;
     private final IUserService userService;
+    private final BasketService basketService;
 
     public void run() {
-        String entryChoice = this.gui.loginOrRegister();
-        boolean correct = switch(entryChoice) {
-            case "1" -> this.userService.login();
-            case "2" -> this.userService.register();
-            default -> false;
-        };
+        Optional<User> userBox = this.loginOrRegister();
 
-        while(correct) {
+        if(userBox.isPresent())
+            this.basketService.checkAndCreateUserBasket(userBox.get());
+
+        while(userBox.isPresent()) {
             switch(this.gui.showChoicesAndGetOne()) {
                 case "1":
                     this.gui.listAllItems();
                     break;
                 case "2":
-                    String id = this.gui.selectItem();
-                    Optional<Item> itemBox = this.itemService.checkItem(id);
+                    Optional<Item> itemBox = this.itemService.checkItem(this.gui.selectItem());
                     if(itemBox.isPresent()) {
-                        this.itemService.addItemToBasket(itemBox.get());
+                        this.basketService.addItemToBasket(itemBox.get());
                         this.gui.showAppMessage("Item added to your basket");
                     }
                     else this.gui.showAppMessage("Item not added.");
                     break;
                 case "3":
-                    this.gui.showBasket(this.itemService.getBasket());
+                    this.gui.showBasket(this.basketService.getBasket());
                     break;
                 case "4":
-                    this.gui.showAppMessage(this.itemService.finalizeBasket() ? "Congratulations, you finalized your shopping" : "You cant finalize your basket");
+                    this.gui.showAppMessage(this.basketService.finalizeBasket() ? "Congratulations, you finalized your shopping" : "You cant finalize your basket");
                     break;
                 case "5":
                     this.gui.showAppMessage("Exiting application...");
@@ -55,5 +56,26 @@ public class Core implements ICore {
             }
         }
         this.gui.showAppMessage("Not logged in! Exiting application...");
+    }
+
+    public Optional<User> loginOrRegister() {
+        String entryChoice = this.gui.loginOrRegister();
+
+        Optional<User> userBox = Optional.empty();
+        switch(entryChoice) {
+            case "1":
+                userBox = this.userService.login();
+                break;
+            case "2":
+                if(this.userService.register()) {
+                    this.gui.showAppMessage("Registered successfully! Now you can log in");
+                    this.run();
+                }
+                break;
+            default:
+                this.gui.showAppMessage("Incorrect choice");
+        }
+
+        return userBox;
     }
 }

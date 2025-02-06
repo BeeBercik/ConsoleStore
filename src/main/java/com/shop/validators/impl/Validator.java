@@ -1,5 +1,6 @@
 package com.shop.validators.impl;
 
+import com.shop.db.repositories.IUserRepository;
 import com.shop.db.repositories.impl.UserRepository;
 import com.shop.model.User;
 import com.shop.validators.IValidator;
@@ -12,12 +13,12 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class Validator implements IValidator {
-    private final UserRepository userRepository;
+    private final IUserRepository userRepository;
 
-    public boolean checkCredentials(User user) {
+    public Optional<User> checkCredentials(User user) {
         Optional<User> userBox = this.userRepository.getByLogin(user.getLogin());
 
         return userBox.isPresent() &&
-                BCrypt.checkpw(user.getPassword(), userBox.get().getPassword());
+                BCrypt.checkpw(user.getPassword(), userBox.get().getPassword()) ? userBox : Optional.empty();
     }
 }

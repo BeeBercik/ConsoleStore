@@ -1,6 +1,7 @@
 package com.shop.services.impl;
 
 import com.shop.db.repositories.IUserRepository;
+import com.shop.db.repositories.impl.BasketRepository;
 import com.shop.gui.IGUI;
 import com.shop.model.User;
 import com.shop.services.IUserService;
@@ -19,14 +20,14 @@ public class UserService implements IUserService {
     private final IValidator validator;
     private final IGUI gui;
 
-    public boolean login() {
+    public Optional<User> login() {
         int attempts = 0;
-        boolean correct = false;
-        while(attempts < 3 && !correct) {
+        Optional<User> userBox = Optional.empty();
+        while(attempts < 3 && userBox.isEmpty()) {
             attempts++;
-            correct = this.validator.checkCredentials(this.gui.askForLoginCredentials());
+            userBox = this.validator.checkCredentials(this.gui.askForLoginCredentials());
         }
-        return correct;
+        return userBox;
     }
 
     public boolean register() {

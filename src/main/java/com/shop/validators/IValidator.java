@@ -2,6 +2,8 @@ package com.shop.validators;
 
 import com.shop.model.User;
 
+import java.util.Optional;
+
 public interface IValidator {
-    boolean checkCredentials(User user);
+    Optional<User> checkCredentials(User user);
 }

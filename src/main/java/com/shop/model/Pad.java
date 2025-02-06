@@ -1,6 +1,8 @@
 package com.shop.model;
 
+import lombok.Getter;
 
+@Getter
 public class Pad extends Item {
     private int buttons;
 

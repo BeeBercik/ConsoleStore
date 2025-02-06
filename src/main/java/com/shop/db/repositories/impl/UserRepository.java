@@ -39,7 +39,7 @@ public class UserRepository implements IUserRepository {
         return Optional.empty();
     }
 
-    public boolean persist(User user) throws IllegalArgumentException {
+    public boolean persist(User user) {
         try {
            if(this.getByLogin(user.getLogin()).isPresent()) {
                throw new IllegalArgumentException();
