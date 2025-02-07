@@ -9,8 +9,8 @@ ConsoleStore is terminal-based application that simulates shopping experience. U
 ### 🔨 Set up & run application
 
 To build and run this app you need installed JDK and MySQL database.
-1. Execute following command in your MySQL client to create new database named console-store
-    - `create database console-store`
+1. Execute following command in your MySQL client to create new database named console_store
+    - `create database console_store`
     - There is no need to manually create database schema or insert any data - application will handle it automatically on the first run
     - You should have user in your db with login "root" and empty password 
 2. Clone this repository to your directory
