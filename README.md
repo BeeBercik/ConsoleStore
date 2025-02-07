@@ -12,8 +12,9 @@ To build and run this app you need installed JDK and MySQL database.
 1. Execute following command in your MySQL client to create new database named console-store
     - `create database console-store`
     - There is no need to manually create database schema or insert any data - application will handle it automatically on the first run
+    - You should have user in your db with login "root" and empty password 
 2. Clone this repository to your directory
-    - `https://github.com/BeeBercik/ConsoleStore.git`
+    - `git clone https://github.com/BeeBercik/ConsoleStore.git`
 3. Navigate inside the directory
     - `cd ConsoleStore`
 4. Build application and create .jar file
@@ -27,7 +28,7 @@ To build and run this app you need installed JDK and MySQL database.
 
 1. User Registration and Login:
    - New users can create accounts by providing unique login credentials.
-     - Existing users can log in with their credentials.
+   - Existing users can log in with their credentials.
 2. List Available Products:
    - Users can view all products, including their details like name, price and quantity. 
 3. Add Items to Basket:
