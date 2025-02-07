@@ -2,7 +2,6 @@ package com.shop.db.repositories.impl;
 
 import com.shop.db.DbConnect;
 import com.shop.db.repositories.IUserRepository;
-import com.shop.gui.IGUI;
 import com.shop.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

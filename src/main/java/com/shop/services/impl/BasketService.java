@@ -16,16 +16,21 @@ import java.util.List;
 public class BasketService implements IBasketService {
 
     @Getter
-    private List<BasketItem> basket = new ArrayList<>();
+    private final List<BasketItem> basket = new ArrayList<>();
 
     private final IItemRepository itemRepository;
 
     public boolean addItemToBasket(Item item, int quantity) {
-        if(quantity > item.getQuantity() )
-            return false;
+        if(quantity > item.getQuantity()) return false;
 
-        this.basket.add(new BasketItem(item, 1));
+        for(BasketItem basketItem : this.basket) {
+            if(basketItem.getItem().getId() == item.getId()) {
+                basketItem.increaseQuantity(quantity);
+                return true;
+            }
+        }
 
+        this.basket.add(new BasketItem(item, quantity));
         return true;
     }
 
@@ -35,7 +40,7 @@ public class BasketService implements IBasketService {
         for(BasketItem basketItem : this.basket) {
             if(basketItem.getItem().getQuantity() < 0 ||
                     basketItem.getQuantity() > basketItem.getItem().getQuantity()) return false;
-            this.itemRepository.decreaseItemQuantity(basketItem.getItem().getId());
+            this.itemRepository.decreaseItemQuantity(basketItem.getItem().getId(), basketItem.getQuantity());
         }
         this.basket.clear();
 

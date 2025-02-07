@@ -1,7 +1,6 @@
 package com.shop.validators.impl;
 
 import com.shop.db.repositories.IUserRepository;
-import com.shop.db.repositories.impl.UserRepository;
 import com.shop.model.User;
 import com.shop.validators.IValidator;
 import lombok.RequiredArgsConstructor;

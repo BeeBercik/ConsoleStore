@@ -5,6 +5,6 @@ import com.shop.model.Item;
 import java.util.List;
 
 public interface IItemRepository {
-    boolean decreaseItemQuantity(int id);
+    void decreaseItemQuantity(int id, int quantity);
     List<Item> getAllItems();
 }

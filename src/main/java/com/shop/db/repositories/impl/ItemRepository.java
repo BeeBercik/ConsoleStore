@@ -21,7 +21,7 @@ public class ItemRepository implements IItemRepository {
         LEFT JOIN consoles on consoles.id = items.console_id
         LEFT JOIN pads on pads.id = items.pad_id
         """;
-    private final String DECREASE_ITEM_QUANTITY = "UPDATE items SET quantity = quantity - 1 WHERE id = ?";
+    private final String DECREASE_ITEM_QUANTITY = "UPDATE items SET quantity = quantity - ? WHERE id = ?";
 
     public List<Item> getAllItems() {
         List<Item> items = new ArrayList<>();
@@ -50,11 +50,13 @@ public class ItemRepository implements IItemRepository {
         return items;
     }
 
-    public boolean decreaseItemQuantity(int id) {
+    public void decreaseItemQuantity(int id, int quantity) {
         try {
             PreparedStatement ps = DbConnect.CONNECTION.prepareStatement(this.DECREASE_ITEM_QUANTITY);
-            ps.setInt(1, id);
-             return ps.executeUpdate() == 1;
+            ps.setInt(1, quantity);
+            ps.setInt(2, id);
+
+            return ps.executeUpdate() == 1;
         } catch(SQLException e) {
             System.out.println("Error during decreasing item quantity");
             e.printStackTrace();

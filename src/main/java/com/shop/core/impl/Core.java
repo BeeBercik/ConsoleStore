@@ -3,13 +3,11 @@ package com.shop.core.impl;
 import com.shop.core.ICore;
 
 import com.shop.gui.IGUI;
-import com.shop.gui.impl.GUI;
 import com.shop.model.Item;
 import com.shop.model.User;
 import com.shop.services.IBasketService;
 import com.shop.services.IItemService;
 import com.shop.services.IUserService;
-import com.shop.services.impl.BasketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +31,6 @@ public class Core implements ICore {
                     this.gui.listAllItems();
                     break;
                 case "2":
-
                     Optional<Item> itemBox = this.itemService.checkItem(this.gui.selectItem());
 
                     if(itemBox.isPresent()) {
@@ -41,7 +38,6 @@ public class Core implements ICore {
                         this.gui.showAppMessage(result ? "Item added to your basket" : "Item not added to your basket");
                     } else
                         this.gui.showAppMessage("Item not added.");
-
                     break;
                 case "3":
                     this.gui.showBasket(this.basketService.getBasket());
@@ -76,7 +72,6 @@ public class Core implements ICore {
             default:
                 this.gui.showAppMessage("Incorrect choice");
         }
-
         return userBox;
     }
 }

@@ -1,10 +1,8 @@
 package com.shop.services.impl;
 
 import com.shop.db.repositories.IItemRepository;
-import com.shop.db.repositories.impl.ItemRepository;
 import com.shop.model.Item;
 import com.shop.services.IItemService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

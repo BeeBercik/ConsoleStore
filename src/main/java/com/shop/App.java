@@ -12,10 +12,10 @@ import org.springframework.context.ApplicationContext;
 public class App {
 
     public static void main(String[] args) {
-       DbConnect.initSchema();
-       DbConnect.initData();
+        DbConnect.initSchema(); // do it one time to create db structure then comment this line
+        DbConnect.initData(); // do it one time to create db data then comment this line
 
-       ApplicationContext context = SpringApplication.run(AppConfiguration.class, args);
-       context.getBean(Core.class).run();
+        ApplicationContext context = SpringApplication.run(AppConfiguration.class, args);
+        context.getBean(Core.class).run();
     }
 }

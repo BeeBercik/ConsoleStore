@@ -1,80 +1,91 @@
 package com.shop.db;
 
-import com.shop.gui.IGUI;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DbConnect {
+
     public static final Connection CONNECTION = DbConnect.getConnection();
 
     public static final String INIT_SCHEMA = """
-            DROP TABLE IF EXISTS consoles CASCADE;
-            DROP TABLE IF EXISTS pads CASCADE;
-            DROP TABLE IF EXISTS items CASCADE;            
-            DROP TABLE IF EXISTS users CASCADE;      
+        SET FOREIGN_KEY_CHECKS=0;
+        DROP TABLE IF EXISTS pads;
+        DROP TABLE IF EXISTS items;
+        DROP TABLE IF EXISTS consoles;
+        DROP TABLE IF EXISTS users;
+        SET FOREIGN_KEY_CHECKS=1;
 
-            create table if not exists users (
-                id serial primary key,
-                login varchar(20),
-                password varchar(60)
-            );
-            
-            create table if not exists consoles (
-              id serial primary key,
-              releaseYear int
-            );
-            
-            create table if not exists  pads (
-              id serial primary key,
-              buttons int
-            );
-            
-            create table if not exists  items (
-                id serial primary key,
-                name varchar(30),
-                price int,
-                console_id int,
-                pad_id int,
-                quantity int,
-                constraint fg_items_consoles
-                foreign key (console_id) references consoles(id),
-                constraint fg_items_pads
-                foreign key (pad_id) references pads(id)
-            );
-            """;
+        CREATE TABLE IF NOT EXISTS users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            login VARCHAR(20),
+            password VARCHAR(60)
+        );
+
+        CREATE TABLE IF NOT EXISTS consoles (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            releaseYear INT
+        );
+
+        CREATE TABLE IF NOT EXISTS pads (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            buttons INT
+        );
+
+        CREATE TABLE IF NOT EXISTS items (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(30),
+            price INT,
+            console_id INT,
+            pad_id INT,
+            quantity INT,
+            CONSTRAINT fg_items_consoles
+                FOREIGN KEY (console_id) REFERENCES consoles(id),
+            CONSTRAINT fg_items_pads
+                FOREIGN KEY (pad_id) REFERENCES pads(id)
+        );
+        """;
 
     public static final String INIT_DATA = """
-        insert into users (login, password) VALUES ('admin', '$2a$10$yKkCXlF4ss5.aHfiF0AQx.SdMwuObfSoBIbevrLPI0IV7wG.BXJrW');
+        INSERT INTO users (login, password)
+        VALUES ('admin', '$2a$10$yKkCXlF4ss5.aHfiF0AQx.SdMwuObfSoBIbevrLPI0IV7wG.BXJrW');
 
-        insert into consoles (releaseYear) VALUES (2020);
-        insert into consoles (releaseYear) VALUES (2021);
-        insert into consoles (releaseYear) VALUES (2022);
-        insert into consoles (releaseYear) VALUES (2019);
-        
-        insert into pads (buttons) VALUES (6);
-        insert into pads (buttons) VALUES (4);
-        
-        insert into items (name, price, console_id, pad_id, quantity) values ('Xbox Series X', 2500, 3, null, 2);
-        insert into items (name, price, console_id, pad_id, quantity) values ('PlayStation 5', 2700, 1, null, 3);
-        insert into items (name, price, console_id, pad_id, quantity) values ('PlayStation Pad', 350, null, 1, 6);
-        insert into items (name, price, console_id, pad_id, quantity) values ('PlayStation 5 Digital', 2200, 2, null, 5);
-        insert into items (name, price, console_id, pad_id, quantity) values ('Xbox Pad', 250, null, 2, 7);
-        insert into items (name, price, console_id, pad_id, quantity) values ('Xbox Series S', 1350, 4, null, 1);
-    """;
+        INSERT INTO consoles (releaseYear) VALUES (2020);
+        INSERT INTO consoles (releaseYear) VALUES (2021);
+        INSERT INTO consoles (releaseYear) VALUES (2022);
+        INSERT INTO consoles (releaseYear) VALUES (2019);
+
+        INSERT INTO pads (buttons) VALUES (6);
+        INSERT INTO pads (buttons) VALUES (4);
+
+        INSERT INTO items (name, price, console_id, pad_id, quantity)
+        VALUES ('Xbox Series X', 2500, 3, NULL, 2);
+
+        INSERT INTO items (name, price, console_id, pad_id, quantity)
+        VALUES ('PlayStation 5', 2700, 1, NULL, 3);
+
+        INSERT INTO items (name, price, console_id, pad_id, quantity)
+        VALUES ('PlayStation Pad', 350, NULL, 1, 6);
+
+        INSERT INTO items (name, price, console_id, pad_id, quantity)
+        VALUES ('PlayStation 5 Digital', 2200, 2, NULL, 5);
+
+        INSERT INTO items (name, price, console_id, pad_id, quantity)
+        VALUES ('Xbox Pad', 250, NULL, 2, 7);
+
+        INSERT INTO items (name, price, console_id, pad_id, quantity)
+        VALUES ('Xbox Series S', 1350, 4, NULL, 1);
+        """;
 
     private static Connection getConnection() {
         try {
-            String url = "jdbc:postgresql://localhost:5432/grocery";
-            String user = "postgres";
+            String url = "jdbc:mysql://localhost:3306/console_store?allowMultiQueries=true";
+            String user = "root";
             String password = "";
 
             return DriverManager.getConnection(url, user, password);
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Error during connecting to the db");
             e.printStackTrace();
         }

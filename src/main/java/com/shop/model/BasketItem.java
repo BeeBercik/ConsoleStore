@@ -25,4 +25,8 @@ public class BasketItem {
     public int calculatePrice() {
         return this.item.getPrice() * this.quantity;
     }
+
+    public void increaseQuantity(int quantity) {
+        this.quantity += quantity;
+    }
 }

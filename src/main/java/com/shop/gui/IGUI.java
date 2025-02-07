@@ -1,7 +1,6 @@
 package com.shop.gui;
 
 import com.shop.model.BasketItem;
-import com.shop.model.Item;
 import com.shop.model.User;
 
 import java.util.List;
