@@ -1,12 +1,13 @@
 package com.shop.services;
 
+import com.shop.model.BasketItem;
 import com.shop.model.Item;
 import com.shop.model.User;
 
 import java.util.List;
 
 public interface IBasketService {
-    void addItemToBasket(Item item);
+    boolean addItemToBasket(Item item, int quantity);
     boolean finalizeBasket();
-    List<Item> getBasket();
+    List<BasketItem> getBasket();
 }

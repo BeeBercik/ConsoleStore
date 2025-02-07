@@ -33,12 +33,15 @@ public class Core implements ICore {
                     this.gui.listAllItems();
                     break;
                 case "2":
+
                     Optional<Item> itemBox = this.itemService.checkItem(this.gui.selectItem());
+
                     if(itemBox.isPresent()) {
-                        this.basketService.addItemToBasket(itemBox.get());
-                        this.gui.showAppMessage("Item added to your basket");
-                    }
-                    else this.gui.showAppMessage("Item not added.");
+                        boolean result = this.basketService.addItemToBasket(itemBox.get(), this.gui.askForQuantity());
+                        this.gui.showAppMessage(result ? "Item added to your basket" : "Item not added to your basket");
+                    } else
+                        this.gui.showAppMessage("Item not added.");
+
                     break;
                 case "3":
                     this.gui.showBasket(this.basketService.getBasket());

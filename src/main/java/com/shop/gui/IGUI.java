@@ -1,5 +1,6 @@
 package com.shop.gui;
 
+import com.shop.model.BasketItem;
 import com.shop.model.Item;
 import com.shop.model.User;
 
@@ -14,5 +15,6 @@ public interface IGUI {
     String showChoicesAndGetOne();
     void showAppMessage(String message);
     String selectItem();
-    void showBasket(List<Item> items);
+    void showBasket(List<BasketItem> items);
+    int askForQuantity();
 }

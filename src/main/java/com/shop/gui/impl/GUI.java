@@ -1,9 +1,11 @@
 package com.shop.gui.impl;
 
 import com.shop.gui.IGUI;
+import com.shop.model.BasketItem;
 import com.shop.model.Item;
 import com.shop.model.User;
 import com.shop.services.IItemService;
+import com.shop.services.impl.BasketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,7 @@ import java.util.*;
 public class GUI implements IGUI {
 
     private final IItemService itemService;
+    private final BasketService basketService;
     private final Scanner scanner = new Scanner(System.in);
 
     public void listAllItems() {
@@ -84,10 +87,19 @@ public class GUI implements IGUI {
         System.out.println("\n** " + message + " **");
     }
 
-    public void showBasket(List<Item> items) {
-        if(items.isEmpty()) this.showAppMessage("Your basket is empty");
+    public int askForQuantity() {
+        System.out.print("Quantity: ");
+        String q = scanner.nextLine();
+        return Integer.parseInt(q);
+    }
+
+    public void showBasket(List<BasketItem> items) {
+        boolean emptyList = items.isEmpty();
+        if(emptyList) this.showAppMessage("Your basket is empty");
         else this.showAppMessage("Your basket");
 
         items.forEach(System.out::println);
+        if(!emptyList)
+            System.out.println("--Summary basket price: " + this.basketService.calculateBasketPrice());
     }
 }
