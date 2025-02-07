@@ -25,7 +25,7 @@ public class GUI implements IGUI {
     }
 
     public String loginOrRegister() {
-        System.out.println("\n***Welcome to the grocery***");
+        System.out.println("\n***Welcome to the ConsoleStore***");
         System.out.println("1. Log in");
         System.out.println("2. Register");
         System.out.print("Nr: ");
