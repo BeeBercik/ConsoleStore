@@ -62,7 +62,7 @@ public class Core implements ICore {
     }
 
     private void addItem() {
-        Optional<Item> itemBox = this.itemService.checkItem(this.gui.selectItem());
+        Optional<Item> itemBox = this.itemService.checkIfAvailable(this.gui.selectItem());
 
         if (itemBox.isPresent()) {
             boolean result = this.basketService.addItemToBasket(itemBox.get(), this.gui.askForQuantity());

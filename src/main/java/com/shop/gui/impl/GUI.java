@@ -29,7 +29,6 @@ public class GUI implements IGUI {
         System.out.println("1. Log in");
         System.out.println("2. Register");
         System.out.print("Nr: ");
-
         return this.scanner.nextLine();
     }
 
@@ -38,7 +37,6 @@ public class GUI implements IGUI {
         String login = this.scanner.nextLine();
         System.out.print("Password: ");
         String password = this.scanner.nextLine();
-
         return new User(login, password);
     }
 
@@ -56,11 +54,11 @@ public class GUI implements IGUI {
             System.out.print("Repeat password: ");
             repPassword = this.scanner.nextLine();
 
-            if(!password.equals(repPassword)) {
-                this.showAppMessage("Passwords do not match. Try again.");
-                attempts++;
-            } else
+            if(password.equals(repPassword)) {
                 return Optional.of(new User(login, password));
+            }
+            this.showAppMessage("Passwords do not match. Try again.");
+            attempts++;
         }
         return Optional.empty();
     }
@@ -73,13 +71,11 @@ public class GUI implements IGUI {
         System.out.println("4. Finalize basket");
         System.out.println("5. Exit shop");
         System.out.print("Nr: ");
-
         return this.scanner.nextLine();
     }
 
     public String selectItem() {
         System.out.print("\nSelect item ID which you want to add to your basket: ");
-
         return this.scanner.nextLine();
     }
 
@@ -89,17 +85,18 @@ public class GUI implements IGUI {
 
     public int askForQuantity() {
         System.out.print("Quantity: ");
-        String q = scanner.nextLine();
-        return Integer.parseInt(q);
+        return Integer.parseInt(this.scanner.nextLine());
     }
 
     public void showBasket(List<BasketItem> items) {
-        boolean emptyList = items.isEmpty();
-        if(emptyList) this.showAppMessage("Your basket is empty");
-        else this.showAppMessage("Your basket");
-
-        items.forEach(System.out::println);
-        if(!emptyList)
+        if(items.isEmpty()) {
+            this.showAppMessage("Your basket is empty");
+        }
+        else {
+            this.showAppMessage("Your basket");
+            items.forEach(System.out::println);
             System.out.println("--Summary basket price: " + this.basketService.calculateBasketPrice());
+
+        }
     }
 }

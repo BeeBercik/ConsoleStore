@@ -23,19 +23,13 @@ public class ItemService implements IItemService {
                 return o1.getId() - o2.getId();
             }
         });
-
         return items;
     }
 
-    public Optional<Item> checkItem(String id) {
-        List<Item> items = this.getAllItems();
-
-        for (Item item : items) {
-            if(Integer.parseInt(id) == item.getId() &&
-                    item.getQuantity() > 0) {
-                return Optional.of(item);
-            }
-        }
-        return Optional.empty();
+    public Optional<Item> checkIfAvailable(String id) {
+        return this.getAllItems().stream()
+                .filter(item -> Integer.parseInt(id) == item.getId())
+                .filter(item ->item.getQuantity() > 0)
+                .findFirst();
     }
 }
