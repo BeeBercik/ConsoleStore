@@ -20,10 +20,8 @@ public class UserService implements IUserService {
     private final IGUI gui;
 
     public Optional<User> login() {
-        int attempts = 0;
         Optional<User> userBox = Optional.empty();
-        while(attempts < 3 && userBox.isEmpty()) {
-            attempts++;
+        for(int attempts = 0; attempts < 3 && userBox.isEmpty(); attempts++) {
             userBox = this.validator.checkCredentials(this.gui.askForLoginCredentials());
         }
         return userBox;

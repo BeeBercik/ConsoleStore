@@ -17,7 +17,6 @@ public class BasketService implements IBasketService {
 
     @Getter
     private final List<BasketItem> basket = new ArrayList<>();
-
     private final IItemRepository itemRepository;
 
     public boolean addItemToBasket(Item item, int quantity) {
@@ -39,7 +38,9 @@ public class BasketService implements IBasketService {
 
         for(BasketItem basketItem : this.basket) {
             if(basketItem.getItem().getQuantity() < 0 ||
-                    basketItem.getQuantity() > basketItem.getItem().getQuantity()) return false;
+                    basketItem.getQuantity() > basketItem.getItem().getQuantity()) {
+                return false;
+            }
             this.itemRepository.decreaseItemQuantity(basketItem.getItem().getId(), basketItem.getQuantity());
         }
         this.basket.clear();
@@ -48,10 +49,8 @@ public class BasketService implements IBasketService {
     }
 
     public int calculateBasketPrice() {
-        int sum = 0;
-        for(BasketItem basketItem : this.basket) {
-            sum += basketItem.getItem().getPrice() * basketItem.getQuantity();
-        }
-        return sum;
+        return this.basket.stream()
+                .mapToInt(basketItem -> basketItem.getItem().getPrice() * basketItem.getQuantity())
+                .sum();
     }
 }

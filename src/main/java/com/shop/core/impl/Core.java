@@ -25,46 +25,32 @@ public class Core implements ICore {
     public void run() {
         Optional<User> userBox = this.loginOrRegister();
 
-        while(userBox.isPresent()) {
-            switch(this.gui.showChoicesAndGetOne()) {
-                case "1":
-                    this.gui.listAllItems();
-                    break;
-                case "2":
-                    Optional<Item> itemBox = this.itemService.checkItem(this.gui.selectItem());
-
-                    if(itemBox.isPresent()) {
-                        boolean result = this.basketService.addItemToBasket(itemBox.get(), this.gui.askForQuantity());
-                        this.gui.showAppMessage(result ? "Item added to your basket" : "Item not added to your basket");
-                    } else
-                        this.gui.showAppMessage("Item not added.");
-                    break;
-                case "3":
-                    this.gui.showBasket(this.basketService.getBasket());
-                    break;
-                case "4":
-                    this.gui.showAppMessage(this.basketService.finalizeBasket() ? "Congratulations, you finalized your shopping" : "You cant finalize your basket");
-                    break;
-                case "5":
+        while (userBox.isPresent()) {
+            switch (this.gui.showChoicesAndGetOne()) {
+                case "1" -> this.gui.listAllItems();
+                case "2" -> this.addItem();
+                case "3" -> this.gui.showBasket(this.basketService.getBasket());
+                case "4" -> this.finalizeBasket();
+                case "5" -> {
                     this.gui.showAppMessage("Exiting application...");
                     return;
-                default:
-                    this.gui.showAppMessage("Incorrect choice!");
+                }
+                default -> this.gui.showAppMessage("Incorrect choice!");
             }
         }
         this.gui.showAppMessage("Not logged in! Exiting application...");
     }
 
-    public Optional<User> loginOrRegister() {
+    public Optional<User> loginOrRegister () {
         String entryChoice = this.gui.loginOrRegister();
 
         Optional<User> userBox = Optional.empty();
-        switch(entryChoice) {
+        switch (entryChoice) {
             case "1":
                 userBox = this.userService.login();
                 break;
             case "2":
-                if(this.userService.register()) {
+                if (this.userService.register()) {
                     this.gui.showAppMessage("Registered successfully! Now you can log in");
                     this.run();
                 }
@@ -73,5 +59,20 @@ public class Core implements ICore {
                 this.gui.showAppMessage("Incorrect choice");
         }
         return userBox;
+    }
+
+    private void addItem() {
+        Optional<Item> itemBox = this.itemService.checkItem(this.gui.selectItem());
+
+        if (itemBox.isPresent()) {
+            boolean result = this.basketService.addItemToBasket(itemBox.get(), this.gui.askForQuantity());
+            this.gui.showAppMessage(result ? "Item added to your basket" : "Item not added to your basket");
+        } else {
+            this.gui.showAppMessage("Item not added.");
+        }
+    }
+
+    private void finalizeBasket() {
+        this.gui.showAppMessage(this.basketService.finalizeBasket() ? "Congratulations, you finalized your shopping" : "You cant finalize your basket");
     }
 }

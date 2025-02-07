@@ -56,11 +56,10 @@ public class ItemRepository implements IItemRepository {
             ps.setInt(1, quantity);
             ps.setInt(2, id);
 
-            return ps.executeUpdate() == 1;
+            ps.executeUpdate();
         } catch(SQLException e) {
             System.out.println("Error during decreasing item quantity");
             e.printStackTrace();
         }
-        return false;
     }
 }
